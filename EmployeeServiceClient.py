@@ -56,5 +56,29 @@ def serviceTester():
     else:
         print (response.json())
 
+# ===================== Meus Endpoints ==================
+
+    # Test update salary inc
+    api_url = api_base_url + '/increase-salary/201'
+    update = {"increase":"3000"}
+    print ('Calling PUT on endpoint: ' + api_url)
+    response = requests.put(api_url, json=update)
+    print('Empregado Atualizado :')
+    print (response.json())
+
+    # Test get average salary
+    api_url = api_base_url + '/average-salary'
+    print ('Calling GET on endpoint: ' + api_url)
+    response = requests.get(api_url)
+    print('Media dos salarios :')
+    print (response.json())
+
+    # Test get max salary
+    api_url = api_base_url + '/get-max-salary'
+    print ('Calling GET on endpoint: ' + api_url)
+    response = requests.get(api_url)
+    print('Maior Salario :')
+    print (response.json())
+
 if __name__ == '__main__':
     serviceTester()

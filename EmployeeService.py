@@ -25,6 +25,41 @@ empDB=[
  }
  ]
 
+# ---------- Meus endpoints ---------
+
+@app.route('/empdb/employee/increase-salary/<empId>',methods=['PUT'])
+def updateEmpIncreaseSalary(empId):
+    # incrementa o salario do funcionario sendo emp[0]['salary'] += aumento no sentido de aumento
+
+    emp = [ emp for emp in empDB if (emp['id'] == empId) ]
+
+    if len(emp) == 0 :
+        print('Usuario nao econtrado')
+        return jsonify({'err': 'Usuário não encontrado'})
+   
+    emp[0]['salary'] = float(emp[0]['salary']) + float(request.json['increase'])
+
+    return jsonify(emp)
+
+@app.route('/empdb/employee/average-salary',methods=['GET'])
+def getAverageSalarys():
+    # calcula a media dos salarios
+
+    average = 0.0
+    salarios = [float(pessoa['salary']) for pessoa in empDB if 'salary' in pessoa]
+
+    if len(salarios) > 0 :
+        average = sum(salarios)/len(salarios)
+
+    return jsonify({'average' : average})
+
+@app.route('/empdb/employee/get-max-salary',methods=['GET'])
+def getMaxSalary():
+    # calcula o maior dos salarios
+    salarios = [float(pessoa['salary']) for pessoa in empDB if 'salary' in pessoa]
+    return jsonify({'salary' : max(salarios)})
+
+# -----------------------------------
 @app.route('/empdb/employee',methods=['GET'])
 def getAllEmp():
     return jsonify({'emps':empDB})
